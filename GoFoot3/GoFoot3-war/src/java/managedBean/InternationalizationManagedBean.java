@@ -7,6 +7,7 @@ package managedBean;
 
 import ejb.CategoriesEJBLocal;
 import ejb.ItemsEJBLocal;
+import exception.GetCategoriesException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -32,11 +33,17 @@ public class InternationalizationManagedBean implements Serializable {
     @Inject
     private ItemManagedBean itemMB;
     
-
+    private String catErrorMessage;
     private Locale locale = new Locale("fr");
-    /**
-     * Creates a new instance of InternationalizationManagedBean
-     */
+
+    public String getCatErrorMessage() {
+        return catErrorMessage;
+    }
+
+    public void setCatErrorMessage(String catErrorMessage) {
+        this.catErrorMessage = catErrorMessage;
+    }
+    
     public InternationalizationManagedBean() {
     }
 
@@ -60,7 +67,15 @@ public class InternationalizationManagedBean implements Serializable {
     
     public List<CategoryModel> getAllCategories()
     {
-        return categoriesEJB.getCategoriesByLanguageId(locale.getLanguage());
+        try{
+            return categoriesEJB.getCategoriesByLanguageId(locale.getLanguage());
+        } catch(GetCategoriesException e){
+            if(locale.getLanguage().equals("fr"))
+                catErrorMessage = e.getMessageFr();
+            else 
+                catErrorMessage = e.getMessageEn();
+            return null;
+        }
     }
     
     public List<ItemModel> getItemsByCatAndLang()

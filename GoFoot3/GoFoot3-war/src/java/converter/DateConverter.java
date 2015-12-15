@@ -5,6 +5,7 @@
  */
 package converter;
 
+import exception.DateException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -13,6 +14,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import managedBean.InternationalizationManagedBean;
 
 /**
  *
@@ -21,27 +24,40 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter("myDateConverter")
 public class DateConverter implements javax.faces.convert.Converter{
 
+    @Inject
+    private InternationalizationManagedBean interMB;
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if(!value.isEmpty())
         {
             try {
+                try{
                 int firstSlash = value.indexOf('/');
                 int day = Integer.parseInt(value.substring(0,firstSlash));
                 int lastSlash = value.lastIndexOf('/');
                 int month = Integer.parseInt(value.substring(firstSlash + 1, lastSlash));
                 Integer year = Integer.parseInt(value.substring(lastSlash + 1));
-
+                
                 if(!isValidDate(day, month, year))
-                    throw new Exception();
+                    throw new DateException();
 
                 if(year.toString().length() != 4)
-                    throw new Exception();
+                    throw new DateException();
 
                 GregorianCalendar gregC = new GregorianCalendar(year, month - 1, day);
                 return gregC.getTime();
-            } catch (Exception e) {
-                FacesMessage msg = new FacesMessage("Erreur de conversion de date", "Date invalide");
+                } catch(Exception e)
+                {
+                    throw new DateException();
+                }
+            } catch (DateException e) {
+                String message;
+                if(interMB.getLocale().getLanguage().equals("fr"))
+                    message = e.getMessageFr();
+                else
+                    message = e.getMessageEn();
+                FacesMessage msg = new FacesMessage(message);
                 msg.setSeverity(FacesMessage.SEVERITY_ERROR);
                 throw new ConverterException(msg);
             }

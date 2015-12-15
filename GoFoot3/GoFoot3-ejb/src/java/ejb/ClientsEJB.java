@@ -5,6 +5,8 @@
  */
 package ejb;
 
+import exception.GetUserException;
+import exception.SaveUserException;
 import java.security.Key;
 import java.util.Base64;
 import javax.crypto.Cipher;
@@ -27,33 +29,33 @@ public class ClientsEJB implements ClientsEJBLocal {
     private static final byte[] keyValue = new byte[] { 'G', 'o', 'F', 'o', 'o', 'T', '3', 'S', 'e', 'c', 'r', 'e', 't', 'K', 'e', 'y' };
     
     @Override
-    public Boolean saveUser(ClientModel client) {
+    public void saveUser(ClientModel client) throws SaveUserException {
         try {
             client.setPassword(encrypt(client.getPassword()));
             clientFacade.saveClient(client);
-            return true;
         } catch (Exception e) {
-            return false;
+            throw new SaveUserException();
         }
     }    
 
     @Override
-    public ClientModel getClientByLoginAndPassword(String login, String password) {
+    public ClientModel getClientByLoginAndPassword(String login, String password) throws GetUserException{
         try
         {
             ClientModel client = clientFacade.getClientByLogin(login);
             String decodedPwd = decrypt(client.getPassword());
             if(decodedPwd.equals(password))
                 return client;
-            return null;
+            else
+                throw new GetUserException();
         }
         catch(Exception e)
         {
-            return null;
+            throw new GetUserException();
         }
     }
     
-    private Key generateKey() throws Exception {
+    private Key generateKey() throws IllegalArgumentException {
         Key key = new SecretKeySpec(keyValue, ALGORITHM);
         return key;
     }

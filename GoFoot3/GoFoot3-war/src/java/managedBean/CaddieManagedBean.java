@@ -5,13 +5,13 @@
  */
 package managedBean;
 
+import ejb.ItemsEJBLocal;
+import ejb.OrderEJBLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import model.ItemModel;
 
@@ -22,11 +22,20 @@ import model.ItemModel;
 @Named(value = "caddieManagedBean")
 @SessionScoped
 public class CaddieManagedBean implements Serializable {
+    @EJB
+    private ItemsEJBLocal itemsEJB;
+    @EJB
+    private OrderEJBLocal orderEJB;
 
     private HashMap caddieHashMap;
     private Double totalPrice;
+    
     @Inject
     private ItemManagedBean itemMB;
+    @Inject
+    private ClientManagedBean clientMB;
+    @Inject
+    private MessageManagedBean messageMB;
 
     public ItemManagedBean getItemMB() {
         return itemMB;
@@ -64,18 +73,7 @@ public class CaddieManagedBean implements Serializable {
     
     public Double getTotalPrice()
     {
-        Set set = caddieHashMap.entrySet();
-        Iterator it = set.iterator();
-        setTotalPrice(0.);
-        while (it.hasNext()) {
-            Map.Entry me = (Map.Entry)it.next();
-            ItemModel im = (ItemModel)me.getValue();
-            if(im.getReducedPrice() != null)
-                totalPrice += im.getReducedPrice()* im.getQuantity();
-            else
-                totalPrice += im.getPrice() * im.getQuantity();
-        }
-        return totalPrice;
+        return itemsEJB.getTotalPrice(caddieHashMap);
     }
     
     public String removeItemFromCaddie(int key)
@@ -93,6 +91,8 @@ public class CaddieManagedBean implements Serializable {
     
     public String orderItems()
     {
-        return "index";
+        orderEJB.createOrder(clientMB.getClient().getId(), caddieHashMap);
+        messageMB.setMessage("Commande réussie!");
+        return "message";
     }
 }

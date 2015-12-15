@@ -21,7 +21,7 @@
         <div id="page">
             <div id="top" class="top">
                 <ui:insert name="top">
-                    <img id="logo" src="resources/images/manchester.png" alt=""/>
+                    <h:graphicImage id="logo" url="resources/images/manchester.png" alt="" />
                     <c:if test="#{clientManagedBean.isLogged}">
                         <div id="hello">
                             <h:outputText  value="Bonjour #{clientManagedBean.client.firstname}"/>    
@@ -55,6 +55,9 @@
                                 </li>
                             </c:forEach>
                         </ul>
+                        <c:if test="#{internationalizationManagedBean.allCategories == null}">
+                                <h:outputText value="#{internationalizationManagedBean.catErrorMessage}"/>
+                        </c:if>
                     </ui:insert>
                 </div>
                 <div id="content" class="left_content">

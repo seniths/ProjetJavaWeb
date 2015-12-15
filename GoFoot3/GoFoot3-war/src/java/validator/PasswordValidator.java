@@ -12,6 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
+import managedBean.InternationalizationManagedBean;
 
 /**
  *
@@ -20,6 +22,9 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("pwdValidator")
 public class PasswordValidator implements Validator{
 
+    @Inject
+    private InternationalizationManagedBean interMB;
+    
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String pwd = value.toString();
@@ -32,12 +37,18 @@ public class PasswordValidator implements Validator{
         
         if(pwd.length() < 5 || pwd.length() > 20){
             uiInput.setValid(false);
-            throw new ValidatorException(new FacesMessage("Veuillez entrer un mot de passe de 5 à 20 caractères!"));
+            if(interMB.getLocale().getLanguage().equals("fr"))
+                throw new ValidatorException(new FacesMessage("Veuillez entrer un mot de passe de 5 à 20 caractères!"));
+            else
+                throw new ValidatorException(new FacesMessage("Please enter a password of 5-20 characters!"));
         }
         
         if(!pwd.equals(confirmPassword)){
             uiInput.setValid(false);
-            throw new ValidatorException(new FacesMessage("Les mots de passe doivent être identiques!"));
+            if(interMB.getLocale().getLanguage().equals("fr"))
+                throw new ValidatorException(new FacesMessage("Les mots de passe doivent être identiques!"));
+            else
+                throw new ValidatorException(new FacesMessage("Passwords must be identical!"));
         }
     }
     

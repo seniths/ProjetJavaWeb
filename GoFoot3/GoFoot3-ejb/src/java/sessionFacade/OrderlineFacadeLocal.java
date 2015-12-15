@@ -5,9 +5,11 @@
  */
 package sessionFacade;
 
+import entityBean.Clientorder;
 import entityBean.Orderline;
 import java.util.List;
 import javax.ejb.Local;
+import model.ItemModel;
 
 /**
  *
@@ -30,4 +32,5 @@ public interface OrderlineFacadeLocal {
 
     int count();
     
+    void createOrderLine(Clientorder idOrder, ItemModel item);
 }

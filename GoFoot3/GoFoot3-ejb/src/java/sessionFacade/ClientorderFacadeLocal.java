@@ -6,6 +6,8 @@
 package sessionFacade;
 
 import entityBean.Clientorder;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +31,7 @@ public interface ClientorderFacadeLocal {
     List<Clientorder> findRange(int[] range);
 
     int count();
+    
+    void createOrder(int idClient, Date date, HashMap items);
     
 }

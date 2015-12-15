@@ -5,6 +5,8 @@
  */
 package ejb;
 
+import exception.GetUserException;
+import exception.SaveUserException;
 import javax.ejb.Local;
 import model.ClientModel;
 
@@ -15,7 +17,7 @@ import model.ClientModel;
 @Local
 public interface ClientsEJBLocal {
  
-    Boolean saveUser(ClientModel client);
+    void saveUser(ClientModel client) throws SaveUserException;
     
-    ClientModel getClientByLoginAndPassword(String login, String password);
+    ClientModel getClientByLoginAndPassword(String login, String password) throws GetUserException;
 }

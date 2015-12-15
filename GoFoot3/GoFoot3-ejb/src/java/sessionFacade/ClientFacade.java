@@ -6,6 +6,8 @@
 package sessionFacade;
 
 import entityBean.Client;
+import exception.GetUserException;
+import exception.SaveUserException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,48 +33,60 @@ public class ClientFacade extends AbstractFacade<Client> implements ClientFacade
     }
 
     @Override
-    public void saveClient(ClientModel client) {
-        Client newClient = new Client();
-        newClient.setFirstname(client.getFirstname());
-        newClient.setLastname(client.getLastname());
-        newClient.setLogin(client.getLogin());
-        newClient.setPassword(client.getPassword());
-        newClient.setAddLocality(client.getLocality());
-        newClient.setAddNumber(client.getNumber());
-        newClient.setAddPosatlcode((short)client.getPostalCode());
-        newClient.setAddStreet(client.getStreet());
-        newClient.setBirthdate(client.getBirthdate());
-        newClient.setGender(client.getGender());
-        newClient.setMail(client.getMail());
-        newClient.setTelnumber(client.getPhone());
-        
-        create(newClient);
-        
+    public void saveClient(ClientModel client) throws SaveUserException{
+        try
+        {
+            Client newClient = new Client();
+            newClient.setFirstname(client.getFirstname());
+            newClient.setLastname(client.getLastname());
+            newClient.setLogin(client.getLogin());
+            newClient.setPassword(client.getPassword());
+            newClient.setAddLocality(client.getLocality());
+            newClient.setAddNumber(client.getNumber());
+            newClient.setAddPosatlcode((short)client.getPostalCode());
+            newClient.setAddStreet(client.getStreet());
+            newClient.setBirthdate(client.getBirthdate());
+            newClient.setGender(client.getGender());
+            newClient.setMail(client.getMail());
+            newClient.setTelnumber(client.getPhone());
+
+            create(newClient);
+        } catch(Exception e)
+        {
+            throw new SaveUserException();
+        }
     }
 
     @Override
-    public ClientModel getClientByLogin(String login) {
-        ClientModel client = new ClientModel();
+    public ClientModel getClientByLogin(String login) throws GetUserException {
+        try
+        {
+            ClientModel client = new ClientModel();
         
-        Query query = em.createNamedQuery("Client.findByLogin");
-        query.setParameter("login", login);
-        Client clientDB = (Client)query.getSingleResult();
+            Query query = em.createNamedQuery("Client.findByLogin");
+            query.setParameter("login", login);
+            Client clientDB = (Client)query.getSingleResult();
+
+            client.setBirthdate(clientDB.getBirthdate());
+            client.setFirstname(clientDB.getFirstname());
+            client.setGender(clientDB.getGender());
+            client.setId(clientDB.getIdclient());
+            client.setLastname(clientDB.getLastname());
+            client.setLocality(clientDB.getAddLocality());
+            client.setLogin(clientDB.getLogin());
+            client.setMail(clientDB.getMail());
+            client.setNumber(clientDB.getAddNumber());
+            client.setPassword(clientDB.getPassword());
+            client.setPhone(clientDB.getTelnumber());
+            client.setPostalCode(clientDB.getAddPosatlcode());
+            client.setStreet(clientDB.getAddStreet());
+
+            return client;
+        } catch(Exception e)
+        {
+            throw new GetUserException();
+        }
         
-        client.setBirthdate(clientDB.getBirthdate());
-        client.setFirstname(clientDB.getFirstname());
-        client.setGender(clientDB.getGender());
-        client.setId(clientDB.getIdclient());
-        client.setLastname(clientDB.getLastname());
-        client.setLocality(clientDB.getAddLocality());
-        client.setLogin(clientDB.getLogin());
-        client.setMail(clientDB.getMail());
-        client.setNumber(clientDB.getAddNumber());
-        client.setPassword(clientDB.getPassword());
-        client.setPhone(clientDB.getTelnumber());
-        client.setPostalCode(clientDB.getAddPosatlcode());
-        client.setStreet(clientDB.getAddStreet());
-        
-        return client;
     }
     
 }

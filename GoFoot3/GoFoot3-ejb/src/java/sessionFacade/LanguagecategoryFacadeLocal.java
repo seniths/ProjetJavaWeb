@@ -6,6 +6,7 @@
 package sessionFacade;
 
 import entityBean.Languagecategory;
+import exception.GetCategoriesException;
 import java.util.List;
 import javax.ejb.Local;
 import model.CategoryModel;
@@ -31,6 +32,6 @@ public interface LanguagecategoryFacadeLocal {
 
     int count();
     
-    List<CategoryModel> getCategoriesByLanguageId(int idLang);
+    List<CategoryModel> getCategoriesByLanguageId(int idLang) throws GetCategoriesException;
     
 }

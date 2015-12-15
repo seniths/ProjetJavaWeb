@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import exception.GetCategoriesException;
 import java.util.List;
 import javax.ejb.Local;
 import model.CategoryModel;
@@ -16,5 +17,5 @@ import model.CategoryModel;
 @Local
 public interface CategoriesEJBLocal {
     
-    List<CategoryModel> getCategoriesByLanguageId(String lang);
+    List<CategoryModel> getCategoriesByLanguageId(String lang) throws GetCategoriesException;
 }

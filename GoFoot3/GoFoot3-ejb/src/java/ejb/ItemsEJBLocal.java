@@ -6,6 +6,7 @@
 
 package ejb;
 
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Local;
 import model.ItemModel;
@@ -21,4 +22,5 @@ public interface ItemsEJBLocal {
     
     ItemModel getItemById(int id, String locale);
     
+    Double getTotalPrice(HashMap items);
 }

@@ -8,7 +8,11 @@ package ejb;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import model.ItemModel;
@@ -63,6 +67,22 @@ public class ItemsEJB implements ItemsEJBLocal {
         GregorianCalendar gregC = new GregorianCalendar();
         int weekNumber = gregC.get(Calendar.WEEK_OF_YEAR);
         return promotioncategoryFacade.getPromoByWeekNumberAndCatId(weekNumber, catId);
+    }
+
+    @Override
+    public Double getTotalPrice(HashMap items) {
+        Double totalPrice = 0.;
+        Set set = items.entrySet();
+        Iterator it = set.iterator();
+        while (it.hasNext()) {
+            Map.Entry me = (Map.Entry)it.next();
+            ItemModel im = (ItemModel)me.getValue();
+            if(im.getReducedPrice() != null)
+                totalPrice += im.getReducedPrice()* im.getQuantity();
+            else
+                totalPrice += im.getPrice() * im.getQuantity();
+        }
+        return totalPrice;
     }
     
 }

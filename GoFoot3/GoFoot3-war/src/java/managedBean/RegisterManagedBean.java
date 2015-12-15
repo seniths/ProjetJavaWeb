@@ -6,6 +6,7 @@
 package managedBean;
 
 import ejb.ClientsEJBLocal;
+import exception.SaveUserException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -24,6 +25,8 @@ public class RegisterManagedBean implements Serializable {
     private ClientsEJBLocal clientsEJB;
     @Inject
     private MessageManagedBean messageMB;
+    @Inject
+    private InternationalizationManagedBean interMB;
     
     private ClientModel client;
     private int day;
@@ -79,15 +82,18 @@ public class RegisterManagedBean implements Serializable {
     
     public String register()
     {
-        if(clientsEJB.saveUser(client))
-        {
+        try{
+            clientsEJB.saveUser(client);
             client = new ClientModel();
             return "connexion";
-        }
-        else 
+        } catch(SaveUserException e)
         {
-            messageMB.setMessage("Erreur lors de la création d'un compte!");
+            if(interMB.getLocale().getLanguage().equals("fr"))
+                messageMB.setMessage(e.getMessageFr());
+            else
+                messageMB.setMessage(e.getMessageEn());
             return "message";
         }
+        
     }
 }

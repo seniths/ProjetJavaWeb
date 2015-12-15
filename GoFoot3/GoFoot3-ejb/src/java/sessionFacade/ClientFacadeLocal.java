@@ -6,6 +6,8 @@
 package sessionFacade;
 
 import entityBean.Client;
+import exception.GetUserException;
+import exception.SaveUserException;
 import java.util.List;
 import javax.ejb.Local;
 import model.ClientModel;
@@ -31,7 +33,7 @@ public interface ClientFacadeLocal {
 
     int count();
     
-    void saveClient(ClientModel client);
+    void saveClient(ClientModel client) throws SaveUserException;
     
-    ClientModel getClientByLogin(String login);
+    ClientModel getClientByLogin(String login) throws GetUserException;
 }

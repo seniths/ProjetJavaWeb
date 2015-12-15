@@ -6,10 +6,12 @@
 package managedBean;
 
 import ejb.ClientsEJBLocal;
+import exception.GetUserException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import model.ClientModel;
 
 /**
@@ -21,9 +23,20 @@ import model.ClientModel;
 public class ClientManagedBean implements Serializable {
     @EJB
     private ClientsEJBLocal clientsEJB;
+    @Inject
+    private InternationalizationManagedBean interMb;
     
     private ClientModel client;
     private Boolean isLogged;
+    private String msgError;
+
+    public String getMsgError() {
+        return msgError;
+    }
+
+    public void setMsgError(String msgError) {
+        this.msgError = msgError;
+    }
 
     public Boolean getIsLogged() {
         return isLogged;
@@ -51,14 +64,17 @@ public class ClientManagedBean implements Serializable {
     
     public String login()
     {
-        client = clientsEJB.getClientByLoginAndPassword(client.getLogin(), client.getPassword());
-        if(client != null)
-        {
+        try{
+            msgError = null;
+            client = clientsEJB.getClientByLoginAndPassword(client.getLogin(), client.getPassword());
             isLogged = true;
             return "index";
-        }
-        else 
+        } catch(GetUserException e)
         {
+            if(interMb.getLocale().getLanguage().equals("fr"))
+                msgError = e.getMessageFr();
+            else
+                msgError = e.getMessageEn();
             return "connexion";
         }
     }

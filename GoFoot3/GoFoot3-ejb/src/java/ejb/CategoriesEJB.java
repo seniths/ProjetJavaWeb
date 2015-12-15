@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import exception.GetCategoriesException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -24,7 +25,7 @@ public class CategoriesEJB implements CategoriesEJBLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public List<CategoryModel> getCategoriesByLanguageId(String lang) {
+    public List<CategoryModel> getCategoriesByLanguageId(String lang) throws GetCategoriesException{
         int idLang = (lang.equals("en") ? 1 : 2);
         return languagecategoryFacade.getCategoriesByLanguageId(idLang);
     }

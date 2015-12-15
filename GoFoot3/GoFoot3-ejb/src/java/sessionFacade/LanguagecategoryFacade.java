@@ -8,6 +8,7 @@ package sessionFacade;
 import entityBean.Category;
 import entityBean.Language;
 import entityBean.Languagecategory;
+import exception.GetCategoriesException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -34,24 +35,54 @@ public class LanguagecategoryFacade extends AbstractFacade<Languagecategory> imp
         super(Languagecategory.class);
     }
 
+//    @Override
+//    public List<CategoryModel> getCategoriesByLanguageId(int idLang) throws GetCategoriesException {
+//        List<CategoryModel> categories = new ArrayList<>();
+//        
+//        try{
+//            entityBean.Language lang = new Language(idLang);
+//            Query query = em.createNamedQuery("Languagecategory.findByLangId");
+//            query.setParameter("idlang", lang);
+//            List<Languagecategory> allCats = query.getResultList();
+//
+//            for (Languagecategory c : allCats) {
+//                CategoryModel cm = new CategoryModel();
+//                Category cat = c.getIdcategory();
+//                cm.setName(c.getLabel());
+//                cm.setId(cat.getIdcategory());
+//                categories.add(cm);
+//            }
+//        } catch(Exception e)
+//        {
+//            throw new GetCategoriesException();
+//        }
+//        
+//        return categories;
+//    }
+
     @Override
-    public List<CategoryModel> getCategoriesByLanguageId(int idLang) {
-        List<CategoryModel> categories = new ArrayList<>();
-        
-        entityBean.Language lang = new Language(idLang);
-        Query query = em.createNamedQuery("Languagecategory.findByLangId");
-        query.setParameter("idlang", lang);
-        List<Languagecategory> allCats = query.getResultList();
-        
-        for (Languagecategory c : allCats) {
-            CategoryModel cm = new CategoryModel();
-            Category cat = c.getIdcategory();
-            cm.setName(c.getLabel());
-            cm.setId(cat.getIdcategory());
-            categories.add(cm);
+    public List<CategoryModel> getCategoriesByLanguageId(int idLang) throws GetCategoriesException {
+        try{
+            List<CategoryModel> categories = new ArrayList<>();
+            entityBean.Language lang = new Language(idLang);
+            Query query = em.createNamedQuery("Languagecategory.findByLangId");
+            query.setParameter("idlang", lang);
+            List<Languagecategory> allCats = query.getResultList();
+
+            for (Languagecategory c : allCats) {
+                CategoryModel cm = new CategoryModel();
+                Category cat = c.getIdcategory();
+                cm.setName(c.getLabel());
+                cm.setId(cat.getIdcategory());
+                categories.add(cm);
+            }
+            return categories;
+        } catch(Exception e)
+        {
+            throw new GetCategoriesException();
         }
-        
-        return categories;
     }
+    
+    
     
 }

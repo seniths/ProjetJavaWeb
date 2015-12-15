@@ -33,6 +33,13 @@
                             </h:inputText>
                             <h:commandButton value="+" action="#{itemManagedBean.changeQty(1)}"/>
                             <h:commandButton value="-" action="#{itemManagedBean.changeQty(-1)}"/>
+                            <div id="selectSize">
+                                <h:selectOneMenu value="#{itemManagedBean.selectedItem.size}">
+                                    <f:selectItem itemValue="s" itemLabel="S"/>
+                                    <f:selectItem itemValue="m" itemLabel="M"/>
+                                    <f:selectItem itemValue="l" itemLabel="L"/>
+                                </h:selectOneMenu>
+                            </div>
                             <h:commandButton value="Ajouter au panier" action="#{caddieManagedBean.addItemToCaddie()}"/>
                             <br/>
                             <h:message for="quantity"/>

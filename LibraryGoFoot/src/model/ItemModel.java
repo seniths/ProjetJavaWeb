@@ -18,6 +18,15 @@ public class ItemModel {
     private int quantity;
     private String label;
     private Double reducedPrice;
+    private char size;
+
+    public char getSize() {
+        return size;
+    }
+
+    public void setSize(char size) {
+        this.size = size;
+    }
 
     public Double getReducedPrice() {
         return reducedPrice;

@@ -133,3 +133,10 @@ and open the template in the editor.
     text-align: right;
     padding: 10px;
 }
+
+#selectSize{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 55px;
+}

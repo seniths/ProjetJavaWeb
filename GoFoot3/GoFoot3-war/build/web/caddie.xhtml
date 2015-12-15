@@ -21,9 +21,10 @@
                                 <tr>
                                     <th><h:outputText value="Article" /></th>
                                     <th><h:outputText value="Description" /></th>
+                                    <th><h:outputText value="Taille" /></th>
                                     <th><h:outputText value="Quantité" /></th>
-                                    <th><h:outputText value="Prix" /></th>
                                     <th><h:outputText value="" /></th>
+                                    <th><h:outputText value="Prix" /></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,13 +37,25 @@
                                             <h:outputText value="#{item.value.label}" />
                                         </td>
                                         <td>
+                                            <h:selectOneMenu value="#{item.value.size}">
+                                                <f:selectItem itemValue="s" itemLabel="S"/>
+                                                <f:selectItem itemValue="m" itemLabel="M"/>
+                                                <f:selectItem itemValue="l" itemLabel="L"/>
+                                            </h:selectOneMenu>
+                                        </td>
+                                        <td>
+                                            <span>
                                                 <h:inputText id="quantity#{item.key}" value="#{item.value.quantity}" validatorMessage="La quantité minimum est de 1!">
                                                     <f:validateLongRange minimum="1" />
                                                 </h:inputText>
-                                                <h:commandButton value="+" action="#{caddieManagedBean.changeItemQuantity(item.key, 1)}"/>
-                                                <h:commandButton value="-" action="#{caddieManagedBean.changeItemQuantity(item.key, -1)}"/>
-                                                <br/>
-                                                <h:message for="quantity#{item.key}"/>
+                                            </span>
+                                            <h:commandButton value="+" action="#{caddieManagedBean.changeItemQuantity(item.key, 1)}"/>
+                                            <h:commandButton value="-" action="#{caddieManagedBean.changeItemQuantity(item.key, -1)}"/>
+                                            <br/>
+                                            <h:message for="quantity#{item.key}"/>
+                                        </td>
+                                        <td>
+                                            <h:commandButton value="Supprimer" action="#{caddieManagedBean.removeItemFromCaddie(item.key)}"/>
                                         </td>
                                         <td>
                                             <c:if test="#{item.value.reducedPrice != null}">
@@ -53,15 +66,12 @@
                                                 <h:outputText value="#{item.value.price}€" class="itemLabel"/>
                                             </c:if>
                                         </td>
-                                        <td>
-                                            <h:commandButton value="Supprimer" action="#{caddieManagedBean.removeItemFromCaddie(item.key)}"/>
-                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="3"></td>
+                                    <td colspan="5"></td>
                                     <td >
                                         <h:outputText value="Total : "/>
                                         <h:outputText value="#{caddieManagedBean.totalPrice}€"/>
@@ -69,7 +79,18 @@
                                 </tr>
                             </tfoot>
                         </table>
-                        <h:commandButton id="btnCommand" value="Commander" action="#{caddieManagedBean.orderItems()}" onclick="return confirm('Confirmer la commande?')" disabled="#{!clientManagedBean.isLogged}"/>
+                        <c:if test="#{!clientManagedBean.isLogged}">
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Il faut être connecté afin de pouvoir passé commande">
+                                <span id="btnCommand">
+                                    <h:commandButton value="Commander" action="#{caddieManagedBean.orderItems()}" onclick="return confirm('Confirmer la commande?')" disabled="#{!clientManagedBean.isLogged}"/>
+                                </span>
+                            </a>
+                        </c:if>
+                        <c:if test="#{clientManagedBean.isLogged}">
+                            <span id="btnCommand">
+                                <h:commandButton value="Commander" action="#{caddieManagedBean.orderItems()}" onclick="return confirm('Confirmer la commande?')" disabled="#{!clientManagedBean.isLogged}"/>
+                            </span>
+                        </c:if>
                     </h:form>
                 </c:if>
             </ui:define>

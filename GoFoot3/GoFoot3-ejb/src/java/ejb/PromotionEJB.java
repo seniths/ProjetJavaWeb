@@ -30,8 +30,5 @@ public class PromotionEJB implements PromotionEJBLocal {
         int weekNumber = gregC.get(Calendar.WEEK_OF_YEAR);
         return promotioncategoryFacade.getPromoByWeekNumber(weekNumber);
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     
 }
