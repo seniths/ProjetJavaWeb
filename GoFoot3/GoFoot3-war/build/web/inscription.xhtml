@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./mainTemplate.xhtml">
+
+            <ui:define name="content">
+                <div id="divInscription">
+                    <h:form>
+                        <table id="tableInscription">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">
+                                        <h:outputText value="Veulliez compléter ce formulaire afin de créer votre compte."/>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th >
+                                        <h:outputText value="(* = champs requis)"/>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Prenom :" for="firstname"/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{registerManagedBean.client.firstname}" id="firstname" required="true" requiredMessage="Prénom requis!"/>
+                                        
+                                    </td>
+                                    <td>
+                                        <h:message for="firstname"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Nom :" for="lastname"/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{registerManagedBean.client.lastname}" id="lastname" required="true" requiredMessage="Nom requis!"/>
+                                    </td>
+                                    <td>
+                                        <h:message for="lastname"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="Date de naissance(JJ/MM/AAAA) :" for="birthdate"/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{registerManagedBean.client.birthdate}" id="birthdate" converter="myDateConverter"/>
+                                    </td>
+                                    <td>
+                                        <h:message for="birthdate"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="Sexe :" for="gender"/>
+                                    </td>
+                                    <td>
+                                        <h:selectOneRadio value="#{registerManagedBean.client.gender}" id="gender" layout="lineDirection">
+                                            <f:selectItem itemValue="true" itemLabel="Homme"/>
+                                            <f:selectItem itemValue="false" itemLabel="Femme"/>
+                                        </h:selectOneRadio>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*E-mail :" for="mail"/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{registerManagedBean.client.mail}" id="mail" required="true" requiredMessage="E-mail requis!" validatorMessage="E-mail invalide!">
+                                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                        </h:inputText>
+                                    </td>
+                                    <td >
+                                        <h:message for="mail"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Login :" for="login"/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{registerManagedBean.client.login}" id="login" required="true" requiredMessage="Login requis!" validatorMessage="Le login doit comprendre entre 5 et 20 caractères!">
+                                            <f:validateLength minimum="5" maximum="20"/>
+                                        </h:inputText>
+                                    </td>
+                                    <td>
+                                        <h:message for="login"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Mot de passe :" for="pwd"/>
+                                    </td>
+                                    <td>
+                                        <h:inputSecret value="#{registerManagedBean.client.password}" id="pwd" required="true" requiredMessage="Mot de passe requis!">
+                                            <f:validator validatorId="pwdValidator"/>
+                                            <f:attribute name="confirm" value="#{confirm}"/>
+                                        </h:inputSecret>
+                                    </td>
+                                    <td>
+                                        <h:message for="pwd"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Répéter le mot de passe :" for="pwd2"/>
+                                    </td>
+                                    <td>
+                                        <h:inputSecret binding="#{confirm}" id="confirm" required="true" requiredMessage="Veuillez répéter le mot de passe!"/>
+                                    </td>
+                                    <td>
+                                        <h:message for="confirm"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Rue :" for="street"/>
+                                    </td>
+                                    <td >
+                                        <h:inputText value="#{registerManagedBean.client.street}" id="street" required="true" requiredMessage="Rue requise!"/>
+                                    </td>
+                                    <td>
+                                        <h:message for="street"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*N° :" for="number"/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{registerManagedBean.client.number}" id="number" required="true" requiredMessage="Numéro requis!"/>
+                                    </td>
+                                    <td>
+                                        <h:message for="number"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Code postal :" for="cp"/>
+                                    </td>
+                                    <td >
+                                        <h:inputText value="#{registerManagedBean.client.postalCode}" id="cp" required="true" requiredMessage="Code postal requis!" validatorMessage="Le code postal doit comporter 4 chiffres" >
+                                            <f:validateLength minimum="4" maximum="4"/>
+                                        </h:inputText>
+                                    </td>
+                                    <td>
+                                        <h:message for="cp"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Localité :" for="locality"/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{registerManagedBean.client.locality}" id="locality" required="true" requiredMessage="Localité requise!"/>
+                                    </td>
+                                    <td>
+                                        <h:message for="locality"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <h:outputLabel value="*Téléphone :" for="phone"/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{registerManagedBean.client.phone}" id="phone" required="true" requiredMessage="Numéro de téléphone requis!" validatorMessage="Numéro de téléphone invalide!">
+                                            <f:validateRegex pattern="(\d){3,4}(/)?(\d){6}"/>
+                                        </h:inputText>
+                                    </td>
+                                    <td>
+                                        <h:message for="phone"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <h:commandButton value="Terminer" action="#{registerManagedBean.register()}" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

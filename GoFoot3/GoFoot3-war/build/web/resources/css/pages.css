@@ -1,0 +1,135 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27 nov. 2015, 11:07:13
+    Author     : Maxime
+*/
+
+#centerDiv {
+    margin-top: 50px;
+    font-size: 18px;
+}
+
+#tablePanier {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tablePanier td, #tablePanier th {
+    border: 1px solid #005555;
+    padding: 3px 7px 2px 7px;
+    text-align: center;
+}
+
+#tablePanier th {
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #00b33c;
+}
+
+#tablePanier tr {
+    background-color: #4bcd54;
+}
+
+#tablePanier tr:nth-child(even) {
+    background-color: #D7F4D9;
+}
+
+#btnCommand {
+    float: right;
+}
+
+.itemToSold{
+    float: left;
+    background: #37C841;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.itemImage{
+    width: 180px;
+    height: 180px;
+}
+
+.itemLabel, .itemDetails, .newPrice, .oldPrice{
+    display: block;
+    text-align: center;
+}
+
+.oldPrice{
+    text-decoration: line-through;
+}
+
+.newPrice{
+    color: red;
+}
+
+.itemButton{
+    text-align: center;
+}
+
+#detailsItem{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+#detailsImage{
+    width: 340px;
+}
+
+#divImage{
+    float: left;
+}
+
+#divInfo{
+    height: 100px;
+    text-align: center;
+    padding: 20px;
+}
+
+#divQuant{
+    padding: 20px;
+    text-align: center;
+}
+
+.imageCaddie{
+    height: 100px;
+}
+
+#divConnexion{
+    width: 40%;
+    display: table-cell;
+    vertical-align: middle;
+    height: 300px;
+}
+
+#tableConnexion{
+    text-align: center;
+    margin: 0 auto;
+}
+
+#divInscription{
+    width: 95%;
+    display: table-cell;
+    vertical-align: middle;
+    height: 300px;
+}
+
+#tableInscription{
+    margin: 0 auto;
+}
+
+#tableInscription th, #tableInscription tfoot td{
+    text-align: center;
+}
+
+.label{
+    text-align: right;
+    padding: 10px;
+}

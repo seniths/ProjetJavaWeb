@@ -1,0 +1,93 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24 nov. 2015, 14:43:58
+    Author     : Maxime
+*/
+
+#logo
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    display: block;
+}
+
+#copyright {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#listeCat li a {
+    text-decoration: none;
+    color:white;
+    padding: 10.5px 11px;
+    background-color: #005555;
+    display: block;
+}
+
+#listeCat li a:visited {
+    color: white;
+}
+
+#listeCat li a:hover, #listeCat li .current {
+    color: white;
+    background-color: #5FD367;
+}
+
+#listeMenu li {
+    display: inline;
+}
+
+#listeMenu li a {
+    text-decoration: none;
+    color:black;
+    font-size: 20px;
+    padding: 5px 20px;
+    background-color: #afe9b3;
+    border-radius: 5px 5px 0 0;
+}
+
+#listeMenu li a:hover {
+    background-color: #37c841;
+}
+
+#listeMenu {
+    margin-left: auto;
+    margin-right: auto;
+    width: 103%;
+    text-align: center;
+}
+
+#divMenu {
+    width: 107%;
+    height: 35px;
+}
+
+#hello{
+    float: left;
+    border-radius: 5px;
+    background: red;
+    margin-left: 10px;
+    padding: 5px;
+    position: absolute;
+}
+
+.promo{
+    color: red;
+    margin-left: 5px;
+    animation: blinker 2s linear infinite;
+    font-weight: bold;
+}
+
+@keyframes blinker{
+    50%{opacity: 0.0;}
+}

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:view locale="#{internationalizationManagedBean.locale}"/>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="css/default.css"/>
+        <h:outputStylesheet name="css/cssLayout.css"/>
+        <h:outputStylesheet name="css/pages.css"/>
+        <h:outputStylesheet name="css/template.css"/>
+        <title>Go Foot</title>
+    </h:head>
+
+    <h:body>
+
+
+        <div id="page">
+            <div id="top" class="top">
+                <ui:insert name="top">
+                    <img id="logo" src="resources/images/manchester.png" alt=""/>
+                    <c:if test="#{clientManagedBean.isLogged}">
+                        <div id="hello">
+                            <h:outputText  value="Bonjour #{clientManagedBean.client.firstname}"/>    
+                        </div>                
+                    </c:if>
+                    <div id="divMenu" >
+                        <ul id="listeMenu">
+                            <li><h:link value="Accueil" outcome="index"/></li>
+                            <li><h:link value="Mon panier" outcome="caddie"/></li>
+                            <li><h:link value="Inscription" outcome="inscription"/></li>
+                            <li><h:link value="Connexion" outcome="connexion"/></li>
+                            <li><h:link value="Notre société" outcome="societe"/></li>
+                        </ul>
+                    </div>
+                </ui:insert>
+            </div>
+            <div id="center">
+                <div id="left">
+                    <ui:insert name="left">
+                        <h1>
+                            <h:outputText value="Catégories" />
+                        </h1>
+                        <ul id="listeCat">
+                            <c:forEach var="item" items="#{internationalizationManagedBean.allCategories}" >
+                                <li>
+                                    <h:link outcome="produit.xhtml">
+                                        <f:param name="cat" value="#{item.id}"/>
+                                        <h:outputText value="#{item.name}"/>
+                                        <h:outputText class="promo" value="#{promotionManagedBean.displayPercentageByCatId(item.id)}"/>
+                                    </h:link>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </ui:insert>
+                </div>
+                <div id="content" class="left_content">
+                    <ui:insert name="content"></ui:insert>
+                </div>
+            </div>
+        </div>
+    </h:body>
+
+</html>

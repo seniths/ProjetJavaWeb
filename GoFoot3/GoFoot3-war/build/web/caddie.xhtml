@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        
+        <ui:composition template="./mainTemplate.xhtml">
+
+            <ui:define name="content">
+                <c:if test="#{caddieManagedBean.caddieHashMap.size() == 0}">
+                    <h:outputText value="Panier Vide"/>
+                </c:if>
+                <c:if test="#{caddieManagedBean.caddieHashMap.size() != 0}">
+                    <h:form>
+                        <table id="tablePanier">
+                            <thead>
+                                <tr>
+                                    <th><h:outputText value="Article" /></th>
+                                    <th><h:outputText value="Description" /></th>
+                                    <th><h:outputText value="Quantité" /></th>
+                                    <th><h:outputText value="Prix" /></th>
+                                    <th><h:outputText value="" /></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="item" items="${caddieManagedBean.caddieHashMap}">
+                                    <tr>
+                                        <td>
+                                            <h:graphicImage class="imageCaddie" url="#{item.value.imageSrc}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{item.value.label}" />
+                                        </td>
+                                        <td>
+                                                <h:inputText id="quantity#{item.key}" value="#{item.value.quantity}" validatorMessage="La quantité minimum est de 1!">
+                                                    <f:validateLongRange minimum="1" />
+                                                </h:inputText>
+                                                <h:commandButton value="+" action="#{caddieManagedBean.changeItemQuantity(item.key, 1)}"/>
+                                                <h:commandButton value="-" action="#{caddieManagedBean.changeItemQuantity(item.key, -1)}"/>
+                                                <br/>
+                                                <h:message for="quantity#{item.key}"/>
+                                        </td>
+                                        <td>
+                                            <c:if test="#{item.value.reducedPrice != null}">
+                                                <h:outputText value="#{item.value.price}€" class="oldPrice"/>
+                                                <h:outputText value="#{item.value.reducedPrice}€" class="newPrice"/>
+                                            </c:if>
+                                            <c:if test="#{item.value.reducedPrice == null}">
+                                                <h:outputText value="#{item.value.price}€" class="itemLabel"/>
+                                            </c:if>
+                                        </td>
+                                        <td>
+                                            <h:commandButton value="Supprimer" action="#{caddieManagedBean.removeItemFromCaddie(item.key)}"/>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td >
+                                        <h:outputText value="Total : "/>
+                                        <h:outputText value="#{caddieManagedBean.totalPrice}€"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <h:commandButton id="btnCommand" value="Commander" action="#{caddieManagedBean.orderItems()}" onclick="return confirm('Confirmer la commande?')" disabled="#{!clientManagedBean.isLogged}"/>
+                    </h:form>
+                </c:if>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

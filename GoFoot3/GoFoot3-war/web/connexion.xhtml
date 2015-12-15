@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./mainTemplate.xhtml">
+
+            <ui:define name="content">
+                <div id="divConnexion">
+                    <h:form>
+                        <table id="tableConnexion">
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="Login :" for="login"/>
+                                </td>
+                                <td>
+                                    <h:inputText id="login" value="#{clientManagedBean.client.login}" validatorMessage="Le login doit comprendre entre 5 et 20 caractères!">
+                                        <f:validateLength minimum="5" maximum="20"/>
+                                    </h:inputText>
+                                </td>
+                                <td>
+                                    <h:message for="login"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputLabel value="Mot de passe :" for="pwd"/>
+                                </td>
+                                <td>
+                                    <h:inputSecret id="pwd" value="#{clientManagedBean.client.password}" validatorMessage="Le mot de passes doit comprendre entre 5 et 20 caractères!">
+                                        <f:validateLength minimum="5" maximum="20"/>
+                                    </h:inputSecret>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td colspan="2">
+                                    <h:commandButton value="Connection" action="#{clientManagedBean.login()}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h:link value="Inscription" outcome="inscription" />
+                                </td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
