@@ -27,6 +27,11 @@ public class ClientsEJB implements ClientsEJBLocal {
 
     private static final String ALGORITHM = "AES";
     private static final byte[] keyValue = new byte[] { 'G', 'o', 'F', 'o', 'o', 'T', '3', 'S', 'e', 'c', 'r', 'e', 't', 'K', 'e', 'y' };
+
+    @Override
+    public Boolean loginIsAvailable(String login) {
+        return clientFacade.loginIsAvailable(login);
+    }
     
     @Override
     public void saveUser(ClientModel client) throws SaveUserException {

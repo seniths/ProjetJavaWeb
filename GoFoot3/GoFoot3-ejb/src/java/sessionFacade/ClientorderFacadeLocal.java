@@ -6,6 +6,7 @@
 package sessionFacade;
 
 import entityBean.Clientorder;
+import exception.OrderException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,6 @@ public interface ClientorderFacadeLocal {
 
     int count();
     
-    void createOrder(int idClient, Date date, HashMap items);
+    void createOrder(int idClient, Date date, HashMap items) throws OrderException;
     
 }

@@ -85,8 +85,19 @@ public class ClientFacade extends AbstractFacade<Client> implements ClientFacade
         } catch(Exception e)
         {
             throw new GetUserException();
+        }   
+    }
+
+    @Override
+    public Boolean loginIsAvailable(String login) {
+        try {
+            Query query = em.createNamedQuery("Client.findByLogin");
+            query.setParameter("login", login);
+            Client entityClient = (Client)query.getSingleResult();
+            return false;
+        } catch (Exception e) {
+            return true;
         }
-        
     }
     
 }

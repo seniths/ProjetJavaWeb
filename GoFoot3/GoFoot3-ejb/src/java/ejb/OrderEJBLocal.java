@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import exception.OrderException;
 import java.util.HashMap;
 import javax.ejb.Local;
 
@@ -15,6 +16,6 @@ import javax.ejb.Local;
 @Local
 public interface OrderEJBLocal {
  
-    void createOrder(int idClient, HashMap items);
+    void createOrder(int idClient, HashMap items) throws OrderException;
     
 }

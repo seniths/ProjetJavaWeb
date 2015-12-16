@@ -18,18 +18,18 @@
                 </div>
                 <div id="divDetails">
                     <div id="divInfo">
-                        <h:outputLabel value="Description :" for="desc"/>
+                        <h:outputLabel value="#{msg.descriptionItem}" for="desc"/>
                         <h:outputText id="desc" value="#{itemManagedBean.selectedItem.label}"/>
                         <br/>
-                        <h:outputLabel value="Prix :" for="price"/>
+                        <h:outputLabel value="#{msg.priceItem}" for="price"/>
                         <h:outputText id="price" value="#{itemManagedBean.selectedItem.price}€" class="#{itemManagedBean.priceClass()}"/>
                         <h:outputText value="#{itemManagedBean.promoPrice()}" class="newPrice"/>
                     </div>
                     <div id="divQuant">
                         <h:form>
-                            <h:outputLabel value="Quantité :" for="quantite"/>
-                            <h:inputText id="quantity" value="#{itemManagedBean.selectedItem.quantity}" validatorMessage="La quantité minimale est de 1!">
-                                <f:validateLongRange minimum="1"/>
+                            <h:outputLabel value="#{msg.quantityItem}" for="quantite"/>
+                            <h:inputText id="quantity" value="#{itemManagedBean.selectedItem.quantity}" validatorMessage="#{msg.validatorQuantity}">
+                                <f:validateDoubleRange minimum="1" maximum="10"/>
                             </h:inputText>
                             <h:commandButton value="+" action="#{itemManagedBean.changeQty(1)}"/>
                             <h:commandButton value="-" action="#{itemManagedBean.changeQty(-1)}"/>
@@ -40,7 +40,7 @@
                                     <f:selectItem itemValue="l" itemLabel="L"/>
                                 </h:selectOneMenu>
                             </div>
-                            <h:commandButton value="Ajouter au panier" action="#{caddieManagedBean.addItemToCaddie()}"/>
+                            <h:commandButton value="#{msg.addToBasket}" action="#{caddieManagedBean.addItemToCaddie()}"/>
                             <br/>
                             <h:message for="quantity"/>
                         </h:form>

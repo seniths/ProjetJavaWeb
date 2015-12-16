@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import exception.OrderException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class OrderEJB implements OrderEJBLocal {
     private ClientorderFacadeLocal clientorderFacade;
 
     @Override
-    public void createOrder(int idClient, HashMap items) {
+    public void createOrder(int idClient, HashMap items) throws OrderException{
         GregorianCalendar g = new GregorianCalendar();
         Date date = g.getTime();
         clientorderFacade.createOrder(idClient, date, items);

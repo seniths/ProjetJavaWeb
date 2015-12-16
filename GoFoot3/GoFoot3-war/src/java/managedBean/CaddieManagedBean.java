@@ -11,6 +11,10 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import model.ItemModel;
@@ -36,6 +40,8 @@ public class CaddieManagedBean implements Serializable {
     private ClientManagedBean clientMB;
     @Inject
     private MessageManagedBean messageMB;
+    @Inject 
+    private InternationalizationManagedBean interMB;
 
     public ItemManagedBean getItemMB() {
         return itemMB;
@@ -50,6 +56,18 @@ public class CaddieManagedBean implements Serializable {
     }
 
     public HashMap getCaddieHashMap() {
+        //refresh langue item
+        Set set = caddieHashMap.entrySet();
+        Iterator it = set.iterator();
+        String locale = interMB.getLocale().getLanguage();
+        while (it.hasNext()){
+            Map.Entry me = (Map.Entry)it.next();
+            ItemModel im = (ItemModel)me.getValue();
+            ItemModel temp = itemsEJB.getItemById(im.getId(), locale);
+            im.setLabel(temp.getLabel());
+            me.setValue(im);
+        }
+        
         return caddieHashMap;
     }
 
@@ -85,14 +103,19 @@ public class CaddieManagedBean implements Serializable {
     public void changeItemQuantity(int key, int qty)
     {
         ItemModel item = (ItemModel)caddieHashMap.get(key);
-        if(item.getQuantity() + qty > 0)
+        if(item.getQuantity() + qty > 0 && item.getQuantity() + qty < 11)
             item.setQuantity(item.getQuantity() + qty);
     }
     
     public String orderItems()
     {
-        orderEJB.createOrder(clientMB.getClient().getId(), caddieHashMap);
-        messageMB.setMessage("Commande réussie!");
+        ResourceBundle currentBundle = ResourceBundle.getBundle("language.lang",interMB.getLocale());
+        try {
+            orderEJB.createOrder(clientMB.getClient().getId(), caddieHashMap);
+            messageMB.setMessage(currentBundle.getString("orderSucceed"));
+        } catch (Exception e) {
+            messageMB.setMessage(currentBundle.getString("orderFailed"));
+        }
         return "message";
     }
 }

@@ -36,4 +36,6 @@ public interface ClientFacadeLocal {
     void saveClient(ClientModel client) throws SaveUserException;
     
     ClientModel getClientByLogin(String login) throws GetUserException;
+    
+    Boolean loginIsAvailable(String login);
 }

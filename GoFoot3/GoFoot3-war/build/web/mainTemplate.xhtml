@@ -6,6 +6,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:view locale="#{internationalizationManagedBean.locale}"/>
+    <f:loadBundle basename="language.lang" var="msg"/>
+    <f:view locale="#{internationalizationManagedBean.locale}"/>
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="css/default.css"/>
@@ -21,28 +23,37 @@
         <div id="page">
             <div id="top" class="top">
                 <ui:insert name="top">
-                    <h:graphicImage id="logo" url="resources/images/manchester.png" alt="" />
-                    <c:if test="#{clientManagedBean.isLogged}">
-                        <div id="hello">
-                            <h:outputText  value="Bonjour #{clientManagedBean.client.firstname}"/>    
-                        </div>                
-                    </c:if>
+                    <h:graphicImage id="logo" url="resources/images/logo2.png" alt="" />
+                    <div id="info">
+                        <c:if test="#{clientManagedBean.isLogged}">
+                            <div id="hello">
+                                <h:outputText  value="#{msg.welcomeWord } #{clientManagedBean.client.firstname}"/>    
+                            </div>      
+                        </c:if>
+                        <div id="btnInter">
+                            <h:form>
+                                <h:commandButton class="btnLang" value="English" image="resources/images/United-Kingdom-flag.png" action="#{internationalizationManagedBean.setToEnglish()}"/>
+                                <h:commandButton class="btnLang" value="Français" image="resources/images/France-Flag.png" action="#{internationalizationManagedBean.setToFrench()}"/>
+                            </h:form>
+                        </div>
+                    </div>
                     <div id="divMenu" >
                         <ul id="listeMenu">
-                            <li><h:link value="Accueil" outcome="index"/></li>
-                            <li><h:link value="Mon panier" outcome="caddie"/></li>
-                            <li><h:link value="Inscription" outcome="inscription"/></li>
-                            <li><h:link value="Connexion" outcome="connexion"/></li>
-                            <li><h:link value="Notre société" outcome="societe"/></li>
+                            <li><h:link value="#{msg.home}" outcome="index"/></li>
+                            <li><h:link value="#{msg.myBasket}" outcome="caddie"/></li>
+                            <li><h:link value="#{msg.registrationBar}" outcome="inscription"/></li>
+                            <li><h:link value="#{msg.connectionBar}" outcome="connexion"/></li>
+                            <li><h:link value="#{msg.ourCompany}" outcome="societe"/></li>
                         </ul>
                     </div>
+                    
                 </ui:insert>
             </div>
             <div id="center">
                 <div id="left">
                     <ui:insert name="left">
                         <h1>
-                            <h:outputText value="Catégories" />
+                            <h:outputText value="#{msg.category}" />
                         </h1>
                         <ul id="listeCat">
                             <c:forEach var="item" items="#{internationalizationManagedBean.allCategories}" >

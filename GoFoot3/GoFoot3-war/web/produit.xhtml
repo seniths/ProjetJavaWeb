@@ -23,7 +23,7 @@
                                     <h:outputText value="#{item.price}€" class="itemLabel"/>
                                 </c:if>
                                 <div class="itemButton">
-                                    <h:link value="Details" outcome="itemDetails">
+                                    <h:link value="#{msg.detail}" outcome="itemDetails">
                                         <f:param name="prod" value="#{item.id}" />
                                     </h:link>
                                 </div>

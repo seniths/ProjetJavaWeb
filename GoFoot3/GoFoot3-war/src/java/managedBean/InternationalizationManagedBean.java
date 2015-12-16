@@ -35,6 +35,24 @@ public class InternationalizationManagedBean implements Serializable {
     
     private String catErrorMessage;
     private Locale locale = new Locale("fr");
+    private Integer currentItemId;
+    private Integer currentCatId;
+
+    public Integer getCurrentCatId() {
+        return currentCatId;
+    }
+
+    public void setCurrentCatId(Integer currentCatId) {
+        this.currentCatId = currentCatId;
+    }
+
+    public Integer getCurrentItemId() {
+        return currentItemId;
+    }
+
+    public void setCurrentItemId(Integer currentItemId) {
+        this.currentItemId = currentItemId;
+    }
 
     public String getCatErrorMessage() {
         return catErrorMessage;
@@ -84,20 +102,39 @@ public class InternationalizationManagedBean implements Serializable {
         String param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("cat");
         if(param != null)
         {
-            catId = Integer.parseInt(param);
-            return itemsEJB.getItemsByCatAndLang(catId, locale.getLanguage());
+            try {
+                catId = Integer.parseInt(param);
+                currentCatId = catId;
+                return itemsEJB.getItemsByCatAndLang(catId, locale.getLanguage());
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        else if(currentCatId != null)
+        {
+            return itemsEJB.getItemsByCatAndLang(currentCatId, locale.getLanguage());
         }
         return null;
     }
     
     public void loadItemById()
     {
-        int prodId = 0;
         String param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("prod");
-        if(param !=null)
+        if(param != null)
         {
-            prodId = Integer.parseInt(param);
-            itemMB.setSelectedItem(itemsEJB.getItemById(prodId, locale.getLanguage()));
+            int id = 0;
+            try{
+                id = Integer.parseInt(param);
+                currentItemId = id;
+                itemMB.setSelectedItem(itemsEJB.getItemById(id, locale.getLanguage()));
+            }catch(NumberFormatException e)
+            {
+                
+            }
+        }
+        else if(currentItemId != null)
+        {
+            itemMB.setSelectedItem(itemsEJB.getItemById(currentItemId, locale.getLanguage()));
         }
     }
 }

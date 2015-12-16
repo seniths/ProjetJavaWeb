@@ -7,10 +7,10 @@ package sessionFacade;
 
 import entityBean.Client;
 import entityBean.Clientorder;
+import exception.OrderException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.ejb.EJB;
@@ -41,23 +41,26 @@ public class ClientorderFacade extends AbstractFacade<Clientorder> implements Cl
     }
 
     @Override
-    public void createOrder(int idClient, Date date, HashMap items) {
-        Clientorder order = new Clientorder();
-        Client client = new Client(idClient);
-        order.setDate(date);
-        order.setIdclient(client);
-        
-        create(order);
-        em.flush();
-        
-        Set set = items.entrySet();
-        Iterator it = set.iterator();
-        while (it.hasNext()){
-            Map.Entry me = (Map.Entry)it.next();
-            ItemModel im = (ItemModel)me.getValue();
-            orderlineFacade.createOrderLine(order, im);
+    public void createOrder(int idClient, Date date, HashMap items) throws OrderException{
+        try {
+            Clientorder order = new Clientorder();
+            Client client = new Client(idClient);
+            order.setDate(date);
+            order.setIdclient(client);
+
+            create(order);
+            em.flush();
+
+            Set set = items.entrySet();
+            Iterator it = set.iterator();
+            while (it.hasNext()){
+                Map.Entry me = (Map.Entry)it.next();
+                ItemModel im = (ItemModel)me.getValue();
+                orderlineFacade.createOrderLine(order, im);
+            }
+        } catch (Exception e) {
+            throw new OrderException();
         }
-        
     }
     
 }

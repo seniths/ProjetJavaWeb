@@ -20,4 +20,6 @@ public interface ClientsEJBLocal {
     void saveUser(ClientModel client) throws SaveUserException;
     
     ClientModel getClientByLoginAndPassword(String login, String password) throws GetUserException;
+    
+    Boolean loginIsAvailable(String login);
 }

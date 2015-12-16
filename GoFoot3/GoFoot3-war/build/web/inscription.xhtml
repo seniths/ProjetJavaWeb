@@ -16,22 +16,22 @@
                             <thead>
                                 <tr>
                                     <th colspan="2">
-                                        <h:outputText value="Veulliez compléter ce formulaire afin de créer votre compte."/>
+                                        <h:outputText value="#{msg.completeForm}"/>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th >
-                                        <h:outputText value="(* = champs requis)"/>
+                                        <h:outputText value="#{msg.requiredField}"/>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Prenom :" for="firstname"/>
+                                        <h:outputLabel value="#{msg.firstname}" for="firstname"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.firstname}" id="firstname" required="true" requiredMessage="Prénom requis!" validatorMessage="Le prénom doit contenir uniquement des lettres!">
+                                        <h:inputText value="#{registerManagedBean.client.firstname}" id="firstname" required="true" requiredMessage="#{msg.requiredFirstname}" validatorMessage="#{msg.validatorFirstname}">
                                             <f:validateRegex pattern="[a-zA-Z]*"/>
                                         </h:inputText>
                                         
@@ -42,10 +42,10 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Nom :" for="lastname"/>
+                                        <h:outputLabel value="#{msg.lastname}" for="lastname"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.lastname}" id="lastname" required="true" requiredMessage="Nom requis!" validatorMessage="Le nom doit contenir uniquement des lettres!">
+                                        <h:inputText value="#{registerManagedBean.client.lastname}" id="lastname" required="true" requiredMessage="#{msg.requiredLastname}" validatorMessage="#{msg.validatorLastname}">
                                             <f:validateRegex pattern="[a-zA-Z]*"/>
                                         </h:inputText>    
                                     </td>
@@ -55,7 +55,7 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="Date de naissance(JJ/MM/AAAA) :" for="birthdate"/>
+                                        <h:outputLabel value="#{msg.birthDate}" for="birthdate"/>
                                     </td>
                                     <td>
                                         <h:inputText value="#{registerManagedBean.client.birthdate}" id="birthdate" converter="myDateConverter"/>
@@ -66,21 +66,21 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="Sexe :" for="gender"/>
+                                        <h:outputLabel value="#{msg.gender}" for="gender"/>
                                     </td>
                                     <td>
                                         <h:selectOneRadio value="#{registerManagedBean.client.gender}" id="gender" layout="lineDirection">
-                                            <f:selectItem itemValue="true" itemLabel="Homme"/>
-                                            <f:selectItem itemValue="false" itemLabel="Femme"/>
+                                            <f:selectItem itemValue="true" itemLabel="#{msg.man}"/>
+                                            <f:selectItem itemValue="false" itemLabel="#{msg.woman}"/>
                                         </h:selectOneRadio>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*E-mail :" for="mail"/>
+                                        <h:outputLabel value="#{msg.email}" for="mail"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.mail}" id="mail" required="true" requiredMessage="E-mail requis!" validatorMessage="E-mail invalide!">
+                                        <h:inputText value="#{registerManagedBean.client.mail}" id="mail" required="true" requiredMessage="#{msg.requiredEmail}" validatorMessage="#{msg.validatorEmail}">
                                             <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
                                         </h:inputText>
                                     </td>
@@ -90,11 +90,11 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Login :" for="login"/>
+                                        <h:outputLabel value="#{msg.loginRegistration}" for="login"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.login}" id="login" required="true" requiredMessage="Login requis!" validatorMessage="Le login doit comprendre entre 5 et 20 caractères!">
-                                            <f:validateLength minimum="5" maximum="20"/>
+                                        <h:inputText value="#{registerManagedBean.client.login}" id="login" required="true" requiredMessage="#{msg.requiredLogin}" >
+                                            <f:validator validatorId="loginValidator"/>
                                         </h:inputText>
                                     </td>
                                     <td>
@@ -103,10 +103,10 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Mot de passe :" for="pwd"/>
+                                        <h:outputLabel value="#{msg.passwordRegistration}" for="pwd"/>
                                     </td>
                                     <td>
-                                        <h:inputSecret value="#{registerManagedBean.client.password}" id="pwd" required="true" requiredMessage="Mot de passe requis!">
+                                        <h:inputSecret value="#{registerManagedBean.client.password}" id="pwd" required="true" requiredMessage="#{msg.requiredPassword}">
                                             <f:validator validatorId="pwdValidator"/>
                                             <f:attribute name="confirm" value="#{confirm}"/>
                                         </h:inputSecret>
@@ -117,10 +117,10 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Répéter le mot de passe :" for="pwd2"/>
+                                        <h:outputLabel value="#{msg.repeatPassword}" for="pwd2"/>
                                     </td>
                                     <td>
-                                        <h:inputSecret binding="#{confirm}" id="confirm" required="true" requiredMessage="Veuillez répéter le mot de passe!"/>
+                                        <h:inputSecret binding="#{confirm}" id="confirm" required="true" requiredMessage="#{msg.requiredRepeatPassword}"/>
                                     </td>
                                     <td>
                                         <h:message for="confirm"/>
@@ -128,10 +128,10 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Rue :" for="street"/>
+                                        <h:outputLabel value="#{msg.street}" for="street"/>
                                     </td>
                                     <td >
-                                        <h:inputText value="#{registerManagedBean.client.street}" id="street" required="true" requiredMessage="Rue requise!"/>
+                                        <h:inputText value="#{registerManagedBean.client.street}" id="street" required="true" requiredMessage="#{msg.requiredStreet}"/>
                                     </td>
                                     <td>
                                         <h:message for="street"/>
@@ -139,10 +139,10 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*N° :" for="number"/>
+                                        <h:outputLabel value="#{msg.number}" for="number"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.number}" id="number" required="true" requiredMessage="Numéro requis!"/>
+                                        <h:inputText value="#{registerManagedBean.client.number}" id="number" required="true" requiredMessage="#{msg.requiredNumber}"/>
                                     </td>
                                     <td>
                                         <h:message for="number"/>
@@ -150,10 +150,10 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Code postal :" for="cp"/>
+                                        <h:outputLabel value="#{msg.postalCode}" for="cp"/>
                                     </td>
                                     <td >
-                                        <h:inputText value="#{registerManagedBean.client.postalCode}" id="cp" required="true" requiredMessage="Code postal requis!" validatorMessage="Le code postal doit comporter 4 chiffres" >
+                                        <h:inputText value="#{registerManagedBean.client.postalCode}" id="cp" required="true" requiredMessage="#{msg.requiredPostalCode}" validatorMessage="#{msg.validatorPostalCode}" >
                                             <f:validateLength minimum="4" maximum="4"/>
                                         </h:inputText>
                                     </td>
@@ -163,10 +163,10 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Localité :" for="locality"/>
+                                        <h:outputLabel value="#{msg.locality}" for="locality"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.locality}" id="locality" required="true" requiredMessage="Localité requise!"/>
+                                        <h:inputText value="#{registerManagedBean.client.locality}" id="locality" required="true" requiredMessage="#{msg.requiredLocality}"/>
                                     </td>
                                     <td>
                                         <h:message for="locality"/>
@@ -174,10 +174,10 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <h:outputLabel value="*Téléphone :" for="phone"/>
+                                        <h:outputLabel value="#{msg.phone}" for="phone"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.phone}" id="phone" required="true" requiredMessage="Numéro de téléphone requis!" validatorMessage="Numéro de téléphone invalide!">
+                                        <h:inputText value="#{registerManagedBean.client.phone}" id="phone" required="true" requiredMessage="#{msg.requiredPhone}" validatorMessage="#{msg.validatorPhone}">
                                             <f:validateRegex pattern="(\d){3,4}(/)?(\d){6}"/>
                                         </h:inputText>
                                     </td>
@@ -190,7 +190,7 @@
                                 <tr>
                                     <td></td>
                                     <td colspan="2">
-                                        <h:commandButton value="Terminer" action="#{registerManagedBean.register()}" />
+                                        <h:commandButton value="#{msg.end}" action="#{registerManagedBean.register()}" />
                                     </td>
                                 </tr>
                             </tfoot>

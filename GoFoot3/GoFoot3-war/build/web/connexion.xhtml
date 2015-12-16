@@ -16,10 +16,10 @@
                         <table id="tableConnexion">
                             <tr>
                                 <td>
-                                    <h:outputLabel value="Login :" for="login"/>
+                                    <h:outputLabel value="#{msg.login}" for="login"/>
                                 </td>
                                 <td>
-                                    <h:inputText id="login" value="#{clientManagedBean.client.login}" validatorMessage="Le login doit comprendre entre 5 et 20 caractères!">
+                                    <h:inputText id="login" value="#{clientManagedBean.client.login}" required="true" requiredMessage="#{msg.requiredLogin}" validatorMessage="#{msg.validatorLogin}">
                                         <f:validateLength minimum="5" maximum="20"/>
                                     </h:inputText>
                                 </td>
@@ -32,22 +32,22 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <h:outputLabel value="Mot de passe :" for="pwd"/>
+                                    <h:outputLabel value="#{msg.password}" for="pwd"/>
                                 </td>
                                 <td>
-                                    <h:inputSecret id="pwd" value="#{clientManagedBean.client.password}" validatorMessage="Le mot de passes doit comprendre entre 5 et 20 caractères!">
+                                    <h:inputSecret id="pwd" value="#{clientManagedBean.client.password}" required="true" requiredMessage="#{msg.requiredPassword}" validatorMessage="#{msg.validatorPassword}">
                                         <f:validateLength minimum="5" maximum="20"/>
                                     </h:inputSecret>
                                 </td>
                             </tr>
                             <tr >
                                 <td colspan="2">
-                                    <h:commandButton value="Connection" action="#{clientManagedBean.login()}"/>
+                                    <h:commandButton value="#{msg.connection}" action="#{clientManagedBean.login()}"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <h:link value="Inscription" outcome="inscription" />
+                                    <h:link value="#{msg.registration}" outcome="inscription" />
                                 </td>
                             </tr>
                         </table>

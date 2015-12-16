@@ -40,7 +40,7 @@ public class ItemManagedBean implements Serializable {
     
     public void changeQty(int qty)
     {
-        if(selectedItem.getQuantity() + qty > 0)
+        if(selectedItem.getQuantity() + qty > 0 && selectedItem.getQuantity() + qty < 11)
             selectedItem.setQuantity(selectedItem.getQuantity() + qty);
     }
     

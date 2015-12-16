@@ -12,19 +12,19 @@
 
             <ui:define name="content">
                 <c:if test="#{caddieManagedBean.caddieHashMap.size() == 0}">
-                    <h:outputText value="Panier Vide"/>
+                    <h:outputText value="#{msg.emptyBasket}"/>
                 </c:if>
                 <c:if test="#{caddieManagedBean.caddieHashMap.size() != 0}">
                     <h:form>
                         <table id="tablePanier">
                             <thead>
                                 <tr>
-                                    <th><h:outputText value="Article" /></th>
-                                    <th><h:outputText value="Description" /></th>
-                                    <th><h:outputText value="Taille" /></th>
-                                    <th><h:outputText value="Quantité" /></th>
-                                    <th><h:outputText value="" /></th>
-                                    <th><h:outputText value="Prix" /></th>
+                                    <th><h:outputText value="#{msg.item}" /></th>
+                                    <th><h:outputText value="#{msg.description}" /></th>
+                                    <th><h:outputText value="#{msg.size}" /></th>
+                                    <th><h:outputText value="#{msg.quantity}" /></th>
+                                    <th></th>
+                                    <th><h:outputText value="#{msg.price}" /></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,8 +45,8 @@
                                         </td>
                                         <td>
                                             <span>
-                                                <h:inputText id="quantity#{item.key}" value="#{item.value.quantity}" validatorMessage="La quantité minimum est de 1!">
-                                                    <f:validateLongRange minimum="1" />
+                                                <h:inputText id="quantity#{item.key}" value="#{item.value.quantity}" validatorMessage="#{msg.validatorQuantity}">
+                                                    <f:validateDoubleRange minimum="1" maximum="10"/>
                                                 </h:inputText>
                                             </span>
                                             <h:commandButton value="+" action="#{caddieManagedBean.changeItemQuantity(item.key, 1)}"/>
@@ -55,7 +55,7 @@
                                             <h:message for="quantity#{item.key}"/>
                                         </td>
                                         <td>
-                                            <h:commandButton value="Supprimer" action="#{caddieManagedBean.removeItemFromCaddie(item.key)}"/>
+                                            <h:commandButton value="#{msg.delete}" action="#{caddieManagedBean.removeItemFromCaddie(item.key)}"/>
                                         </td>
                                         <td>
                                             <c:if test="#{item.value.reducedPrice != null}">
@@ -71,24 +71,26 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="5"></td>
-                                    <td >
-                                        <h:outputText value="Total : "/>
+                                    <td colspan="4"></td>
+                                    <td>
+                                        <h:outputText value="#{msg.total}"/>
+                                    </td>
+                                    <td>
                                         <h:outputText value="#{caddieManagedBean.totalPrice}€"/>
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
                         <c:if test="#{!clientManagedBean.isLogged}">
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Il faut être connecté afin de pouvoir passé commande">
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="#{msg.tooltip}">
                                 <span id="btnCommand">
-                                    <h:commandButton value="Commander" action="#{caddieManagedBean.orderItems()}" onclick="return confirm('Confirmer la commande?')" disabled="#{!clientManagedBean.isLogged}"/>
+                                    <h:commandButton value="#{msg.order}" action="#{caddieManagedBean.orderItems()}" onclick="return confirm('#{msg.confirmation}?')" disabled="#{!clientManagedBean.isLogged}"/>
                                 </span>
                             </a>
                         </c:if>
                         <c:if test="#{clientManagedBean.isLogged}">
                             <span id="btnCommand">
-                                <h:commandButton value="Commander" action="#{caddieManagedBean.orderItems()}" onclick="return confirm('Confirmer la commande?')" disabled="#{!clientManagedBean.isLogged}"/>
+                                <h:commandButton value="#{msg.order}" action="#{caddieManagedBean.orderItems()}" onclick="return confirm('#{msg.confirmation}?')" disabled="#{!clientManagedBean.isLogged}"/>
                             </span>
                         </c:if>
                     </h:form>

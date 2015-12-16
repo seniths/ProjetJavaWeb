@@ -78,4 +78,9 @@ public class ClientManagedBean implements Serializable {
             return "connexion";
         }
     }
+    
+    public Boolean loginIsAvailable(String login)
+    {
+        return clientsEJB.loginIsAvailable(login);
+    }
 }
