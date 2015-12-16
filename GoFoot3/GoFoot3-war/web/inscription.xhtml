@@ -31,7 +31,9 @@
                                         <h:outputLabel value="*Prenom :" for="firstname"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.firstname}" id="firstname" required="true" requiredMessage="Prénom requis!"/>
+                                        <h:inputText value="#{registerManagedBean.client.firstname}" id="firstname" required="true" requiredMessage="Prénom requis!" validatorMessage="Le prénom doit contenir uniquement des lettres!">
+                                            <f:validateRegex pattern="[a-zA-Z]*"/>
+                                        </h:inputText>
                                         
                                     </td>
                                     <td>
@@ -43,7 +45,9 @@
                                         <h:outputLabel value="*Nom :" for="lastname"/>
                                     </td>
                                     <td>
-                                        <h:inputText value="#{registerManagedBean.client.lastname}" id="lastname" required="true" requiredMessage="Nom requis!"/>
+                                        <h:inputText value="#{registerManagedBean.client.lastname}" id="lastname" required="true" requiredMessage="Nom requis!" validatorMessage="Le nom doit contenir uniquement des lettres!">
+                                            <f:validateRegex pattern="[a-zA-Z]*"/>
+                                        </h:inputText>    
                                     </td>
                                     <td>
                                         <h:message for="lastname"/>
